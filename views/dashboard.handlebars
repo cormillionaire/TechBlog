@@ -1,8 +1,12 @@
-<section class="painting">
-  <img src="/images/{{painting.filename}}" alt="{{painting.description}}">
-  <div class="painting-details">
-    <h3>{{painting.title}}</h3>
-    <p>By: {{painting.artist}}</p>
-    <p>Exhibition open until: {{ format_date painting.exhibition_date}}</p>
+<header>
+  <h1>The Tech Blog</h1>
+</header>
+<main>
+  {{#each userPosts as |userPost|}}
+  {{> postlist}}
+  {{/each}}
+  <div>
+    <button id="new-post" href="/newpost">+ New Post</button>
   </div>
-</section>
+</main>
+<script src="./js/dashboard.js"></script>

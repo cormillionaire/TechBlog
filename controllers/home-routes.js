@@ -1,20 +1,17 @@
 const router = require('express').Router();
-const { Blogpost } = require('../models');
+const { Blogpost, User } = require('../models');
 // Import the custom middleware
 const withAuth = require('../utils/auth');
 
 // GET all galleries for homepage
 router.get('/', async (req, res) => {
-  if (!req.session.loggedIn) {
-    res.redirect('/login');
-    return;
-  }
+
   try {
     const BlogpostData = await Blogpost.findAll({
       include: [
         {
           model: User,
-          attributes: ['name', 'description'],
+          attributes: ['name'],
         },
       ],
     });
@@ -25,7 +22,7 @@ router.get('/', async (req, res) => {
 
     res.render('homepage', {
       blogposts,
-      loggedIn: req.session.loggedIn,
+      loggedIn: req.session.logged_in,
     });
   } catch (err) {
     console.log(err);
@@ -33,23 +30,57 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET one gallery
-// Use the custom middleware before allowing the user to access the gallery
+router.get('/dashboard', withAuth, async (req, res) => {
+  try {
+    const userPostData = await Blogpost.findAll({
+      where: {
+        user_id: req.session.user_id
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+      ]
+    });
+    const userPosts = userPostData.map((userPost) => 
+    userPost.get({ plain: true })
+    );
+    res.render('dashboard', {
+      userPosts,
+      loggedIn: req.session.logged_in,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
-// GET one painting
-// Use the custom middleware before allowing the user to access the painting
-// router.get('/painting/:id', withAuth, async (req, res) => {
-//   try {
-//     const dbPaintingData = await Painting.findByPk(req.params.id);
+router.get('/newpost', async (req, res) => {
+  withAuth;
+    res.render('newpost');
+});
 
-//     const painting = dbPaintingData.get({ plain: true });
-
-//     res.render('painting', { painting, loggedIn: req.session.loggedIn });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json(err);
-//   }
-// });
+router.get('/comments/:id', async (req, res) => {
+  withAuth;
+  try {
+    const activePostData = await Blogpost.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+      ]
+    });
+    const postData = activePostData.get({ plain: true })
+    res.render('comments', {
+      postData
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {

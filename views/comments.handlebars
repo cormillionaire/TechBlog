@@ -1,0 +1,19 @@
+  <header>
+    <h1>The Tech Blog</h1>
+  </header>
+  <main>
+  {{> postlist postData}}
+<section class="card">
+  <form class="form new-comment">
+    <div class="form-group">
+      <label for="new-comment">Comment</label>
+      <input class="form-input" type="text" id="description" />
+      <input class="" type="hidden" id="post_id" value="{{blogpost.id}}"/>
+    </div>
+    <div class="form-group">
+      <button class="btn" id="create-new-comment" type="submit">Submit</button>
+    </div>
+  </form>
+</section>
+</main>
+<script src="/js/comment.js"></script>

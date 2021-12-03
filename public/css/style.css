@@ -1,8 +1,7 @@
 :root {
-  --primary: #3d5852;
-  --secondary: #86938f;
-  --tertiary: #5e877f;
-  --quatrinary: #6c6b67;
+  --primary: #b8c3aa;
+  --secondary: #140500;
+  --tertiary: #adadad;
   --light: #e3e4e3;
   --dark: #182c23;
   --error: rgb(228, 46, 1);
@@ -16,37 +15,38 @@ body {
   flex-direction: column;
   min-height: 100vh;
   justify-content: flex-start;
-  background-color: var(--quatrinary);
+  background-color: var(--primary);
 }
 
-a {
-  color: var(--dark);
-  text-decoration: none;
-}
-
-a:visited {
-  color: inherit;
+.btn {
+  width: 100%;
+  text-align: center;
+  background: var(--tertiary);
+  color: var(--light);
 }
 
 header {
   padding: 40px;
-  text-align: center;
+  text-align: left;
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+header h1{
+  padding: 20px;
+  text-align: left;
   background: var(--primary);
-  color: var(--light);
+  color: var(--secondary);
+  border: 2px;
+  border-radius: 10px;
+  box-shadow: 5px 10px var(--tertiary);
+  max-width: 20%;
 }
 
 main {
   display: flex;
-  flex-wrap: wrap;
-  flex-grow: 1;
-}
-
-aside {
-  flex: 0;
-  background-color: var(--tertiary);
-  padding: 80px;
-  text-align: left;
-  color: var(--light);
+  flex-grow: 1 0 0;
+  flex-direction: column;
 }
 
 nav {
@@ -55,25 +55,16 @@ nav {
 }
 
 nav a {
-  color: var(--light);
+  color: var(--primary);
   padding: 14px 20px;
   text-decoration: none;
   text-align: center;
+  text-decoration: none;
 }
 
 nav a:hover {
   color: var(--secondary);
   background-color: var(--dark);
-}
-
-.gallery {
-  flex: 4;
-  background-color: #fff;
-  padding: 50px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
 }
 
 .btn-no-style {
@@ -92,40 +83,41 @@ img {
   height: auto;
 }
 
-.painting {
-  width: 50%;
-  background-color: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  margin-bottom: 25px;
+h2 {
+  padding: 20px;
+  background: var(--secondary);
+  color: var(--primary);
 }
 
-.painting-details {
-  text-align: center;
-  padding: 10px 20px;
-  font-weight: bold;
+a {
+  text-decoration: none;
+  color: var(--light);
 }
 
 /* CARDS */
 .card {
+  padding: 20px;
   margin: 20px;
   flex: 0 1 300px;
   border: 7px double var(--dark);
   border-radius: 10px;
   background-color: var(--light);
   color: var(--dark);
+
 }
 
 .login-card {
-  margin: 0 0 20px 0;
-  flex: 0 0 50%;
-  max-width: 50%;
-  padding: 5px;
-  border: 3px solid var(--dark);
-  border-radius: var(--border-radius);
-  border-style: double;
-  border-width: thick;
-  background-color: #577a7c;
-  color: var(--light);
+  width: 90%;
+  margin: 20px;
+  border: 3px solid var(--secondary);
+  border-radius: thick var(--border-radius);
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
+.login-card a{
+  padding: 10px;
+  text-align: center;
 }
 
 .card header {
@@ -133,9 +125,13 @@ img {
   font-weight: bold;
   text-transform: uppercase;
   margin: 0;
-  background-color: var(--tertiary);
+  background-color: var(--secondary);
   padding: 0.625rem;
   border-radius: calc(0.18rem - 1px) calc(0.18rem - 1px) 0 0;
+}
+
+.card header div {
+  text-align: right;
 }
 
 .card-body {
@@ -144,18 +140,15 @@ img {
   font-weight: bold;
 }
 
-.gallery-name {
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 2px 2px 5px var(--secondary);
-  border: 10px groove var(--light);
-  padding-top: 30px;
-  padding-bottom: 30px;
-  padding-right: 100px;
-  padding-left: 100px;
+/* LAYOUT */
+.login-form {
+  padding: 20px;
 }
 
-/* LAYOUT */
+.signup-form {
+  padding: 20px;
+}
+
 .container {
   display: flex;
   flex-flow: column wrap;

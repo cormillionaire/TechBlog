@@ -1,8 +1,10 @@
-const loginFormHandler = async (event) => {
+//when click new post, 
+//new posts
+const newPostFormHandler = async (event) => {
   event.preventDefault();
 
-  const email = document.querySelector('#email-login').value.trim();
-  const password = document.querySelector('#password-login').value.trim();
+  const title = document.querySelector('#title').value.trim();
+  const content = document.querySelector('#content').value.trim();
 
   if (email && password) {
     const response = await fetch('/api/users/login', {
