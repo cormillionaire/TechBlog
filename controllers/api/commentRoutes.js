@@ -1,13 +1,16 @@
 const router = require('express').Router();
-const { Comment } = require('../../models');
+const { Comment,Blogpost } = require('../../models');
 
 router.get('/:post_id', async (req, res) => {
   try {
-    const commentData = await Comment.findAll({
-      where: {
-        post_id: req.session.post_id
-      }
-    });
+    const commentData = await Blogpost.findByPk(req.session.id,  {
+      include: [
+        {
+          model: Comment,
+          attributes: ['description','user_id','date_created'],
+        },
+      ]
+      });
     res.status(200).json(commentData);
   } catch (err) {
     res.status(400).json(err);
@@ -15,6 +18,7 @@ router.get('/:post_id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+  console.log(req.body);
   try {
     const newComment = await Comment.create({
       ...req.body,

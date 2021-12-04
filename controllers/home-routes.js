@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Blogpost, User } = require('../models');
+const { Blogpost, User, Comment } = require('../models');
 // Import the custom middleware
 const withAuth = require('../utils/auth');
 
@@ -43,8 +43,8 @@ router.get('/dashboard', withAuth, async (req, res) => {
         },
       ]
     });
-    const userPosts = userPostData.map((userPost) => 
-    userPost.get({ plain: true })
+    const userPosts = userPostData.map((userPost) =>
+      userPost.get({ plain: true })
     );
     res.render('dashboard', {
       userPosts,
@@ -56,25 +56,38 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 });
 
-router.get('/newpost', async (req, res) => {
-  withAuth;
-    res.render('newpost');
+router.get('/newpost',withAuth, async (req, res) => {
+  res.render('newpost');
 });
 
-router.get('/comments/:id', async (req, res) => {
-  withAuth;
+router.get('/comments/:id', withAuth, async (req, res) => {
   try {
     const activePostData = await Blogpost.findByPk(req.params.id, {
       include: [
         {
           model: User,
           attributes: ['name'],
-        },
+        }
       ]
     });
     const postData = activePostData.get({ plain: true })
+    const postCommentsData = await Comment.findAll({
+      where: {
+        post_id: req.params.id
+      },
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        }
+      ]
+    });
+    const commentsData = postCommentsData.map((comments) => 
+    comments.get({ plain: true })
+    );
     res.render('comments', {
-      postData
+      postData,
+      commentsData
     });
   } catch (err) {
     console.log(err);
@@ -83,7 +96,7 @@ router.get('/comments/:id', async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
+  if (req.session.logged_in) {
     res.redirect('/');
     return;
   }
@@ -91,7 +104,7 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/signup', (req, res) => {
-  if (req.session.loggedIn) {
+  if (req.session.logged_in) {
     res.redirect('/');
     return;
   }

@@ -1,11 +1,13 @@
 <header>
-  <h1>The Tech Blog</h1>
+  <h1>Your Blog</h1>
 </header>
 <main>
-  {{#each userPosts as |userPost|}}
-  {{> postlist}}
-  {{/each}}
   <div>
+    {{#each userPosts as |userPost|}}
+    {{> postlist}}
+    {{/each}}
+  </div>
+  <div class ="new-post">
     <button id="new-post" href="/newpost">+ New Post</button>
   </div>
 </main>
