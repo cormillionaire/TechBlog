@@ -1,26 +1,43 @@
-//when click new post, 
-//new posts
-const newPostFormHandler = async (event) => {
-  event.preventDefault();
+const deletePost = async (event) => {
+  const id = document.querySelector('#delete-post').value.trim();
 
-  const title = document.querySelector('#title').value.trim();
-  const content = document.querySelector('#content').value.trim();
+  if (id) {
+    const response = await fetch('/api/blogposts/'+id, {
+      method: 'DELETE',
+    });
+    if (response.ok) {
+      document.location.replace('/dashboard');
+    } else {
+      alert('Failed to delete.');
+    }
+  }
+};
 
-  if (email && password) {
-    const response = await fetch('/api/users/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
+const updatePost = async (event) => {
+  const name = document.querySelector('#name').value.trim();
+  const description = document.querySelector('#description').value.trim();
+  const id = document.querySelector('#post_id').value.trim();
+
+  if (name && description) {
+    const response = await fetch('/api/blogposts/'+id, {
+      method: 'PUT',
+      body: JSON.stringify({ name, description}),
       headers: { 'Content-Type': 'application/json' },
     });
-
     if (response.ok) {
-      document.location.replace('/');
+      document.location.replace('/dashboard');
     } else {
-      alert('Failed to log in.');
+      alert('Failed to update.');
     }
   }
 };
 
 document
-  .querySelector('.login-form')
-  .addEventListener('submit', loginFormHandler);
+  .querySelector('#delete-post')
+  .addEventListener('click', deletePost);
+
+  document
+  .querySelector('.update-post-form')
+  .addEventListener('submit', updatePost);
+
+

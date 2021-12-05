@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Blogpost } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 router.get('/', async (req, res) => {
   try {
@@ -24,12 +25,32 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
+  try {
+    
+    const updateBlogpost = await Blogpost.update({
+      name: req.body.name,
+      description: req.body.description
+    },
+    {
+      where: {
+        id: req.params.id,
+      }
+    });
+    console.log("blog "+updateBlogpost);
+    res.status(200).json(updateBlogpost);
+  } catch (err) {
+    console.log("error "+err);
+    res.status(400).json(err);
+    
+  }
+});
+
+router.delete('/:id' , async (req, res) => {
   try {
     const blogpostData = await Blogpost.destroy({
       where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
+        id: req.params.id
       },
     });
 

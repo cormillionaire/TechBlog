@@ -1,25 +1,28 @@
-<h1>Your Blog</h1>
+<header>
+<h1>Your Dashboard</h1>
+</header>
 <section class="card">
-  <h2 class="page-title">Create New Post</h2>
+  <h2 class="page-title">Edit Post</h2>
   <form class="form update-post-form">
     <div class="form-group">
       <label for="update-post-name">Title</label>
-      <input class="form-input" type="text" id="name" value="{{blogpost.name}}" />
+      <input class="form-input" type="text" id="name" value="{{currentPostData.name}}" />
     </div>
     <div class="form-group">
       <label for="update-post-description">Content</label>
-      <input class="form-input" type="test" id="description" value="{{blogpost.description}}" />
+      <input class="form-input" type="test" id="description" value="{{currentPostData.description}}" />
+      <input class="" type="hidden" id="post_id" value ="{{currentPostData.id}}"/>
     </div>
     <div class="form-group">
       <button class="btn" id="update-post" type="submit">Update</button>
     </div>
     <div class="form-group">
-      <button class="btn" id="delete-post" type="submit">Delete</button>
+      <button class="btn" id="delete-post" type="submit" value="{{currentPostData.id}}">Delete</button>
     </div>
   </form>
 </section>
-<div>
-  <button href="/newpost">+ New Post</button>
+<div class="new-post">
+  <button id="new-post" href="/newpost">+ New Post</button>
 </div>
 
-<script src="./js/blogpost.js"></script>
+<script src="/js/updatepost.js"></script>

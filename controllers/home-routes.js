@@ -95,6 +95,20 @@ router.get('/comments/:id', withAuth, async (req, res) => {
   }
 });
 
+router.get('/updatepost/:id', withAuth, async (req, res) => {
+  try {
+    const updatePostData = await Blogpost.findByPk(req.params.id);
+    const currentPostData = updatePostData.get({ plain: true })
+    
+    res.render('updatepost', {
+      currentPostData
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 router.get('/login', (req, res) => {
   if (req.session.logged_in) {
     res.redirect('/');
